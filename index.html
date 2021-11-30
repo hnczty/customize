@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>湖南打卡--2018.02.28</title>
+<title>hn-test</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
 
@@ -217,36 +217,40 @@ body {
 	text-align: center;
 }
 
-button {
-	width: 20%;
-	padding: 20px;
-	margin-top: 20px;
+.login, .go, .location, .view {
+    width: 20%;
+    line-height: 40px;
+    background: #09f;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 30px;
+    margin: 12px 2px;
+    color: #fff;
+    padding: 10px 10px;
 }
 
-#goto {
-	margin-top: 20px;
-}
 </style>
 </head>
 <body>
 	<div id="local"></div>
+<!--	<div>-->
+<!--		<a class="login" type="button" value="cxl" data-user="HX0153" data-pwd="cxl134809" data-iemi="ee067a5a-3d4e-36cd-8e74-37129963aee3">cxl</a>-->
+<!--		<a class="go" type="button" value="公司">公司</a>-->
+<!--		<a class="location" type="button" value="当前">当前</a>-->
+<!--		<a class="view" type="button" value="open" data-user="HX0153">open</a>-->
+<!--	</div>-->
 	<div>
-		<button class="login" type="button" data-user="HX0154" data-pwd="ty123456" data-iemi="6377f2f9-7256-3b03-b2b4-933c75453c67">ty</button>
-		<button class="go" type="button">公司</button>
-		<button class="location" type="button">当前</button>
-		<button class="view" type="button" data-user="HX0154">open</button>
+		<a class="login" type="button" value="ty" data-user="HX0154" data-pwd="ty123456" data-iemi="6377f2f9-7256-3b03-b2b4-933c75453c67">ty</a>
+		<a class="go" type="button" value="公司">公司</a>
+		<a class="location" type="button" value="当前">当前</a>
+		<a class="view" type="button" value="open" data-user="HX0154">open</a>
 	</div>
-	<div style="display:;">
-		<button class="login" type="button" data-user="HX0153" data-pwd="cxl13480987849" data-iemi="94cf2ebb-f556-3379-b134-9b47c598a082">cxl</button>
-		<button class="go" type="button">公司</button>
-		<button class="location" type="button">当前</button>
-		<button class="view" type="button" data-user="HX0153">open</button>
-	</div>
-	<!--div>
-		<button class="login" type="button" data-user="HX0165" data-pwd="cwb123456" data-iemi="5c85b6dd-e772-3cf5-adbe-22bd004f90ed">cwb login</button>
-		<button class="go" type="button">Go</button>
-		<button class="view" type="button" data-user="HX0165">view</button>
-	</div-->
+<!--	<div>-->
+<!--		<a class="login" type="button" value="zr" data-user="HX0161" data-pwd="zhang12138" data-iemi="b182ab51-2d82-34a2-8ae3-7b2f13ddadee">zr</a>-->
+<!--		<a class="go" type="button" value="公司">公司</a>-->
+<!--		<a class="location"type="button" value="当前">当前</a>-->
+<!--		<a class="view" type="button" value="open" data-user="HX0161">open</a>-->
+<!--	</div>-->
 
 	<form id="postform" method="post" action="http://kfpt.drugwebcn.com/login!login.do" target="viewweb">
 		<input type="hidden" name="IS_JSON" value="true">
@@ -258,7 +262,7 @@ button {
 		<input type="hidden" id="password" name="user.password" value="">
 	</form>
 	<iframe name="viewweb" id="viewweb" src="javascript:;" data-state="" title="" data-empId="" style="display: none;"></iframe>
-	<iframe id="goto" src="" data-src="http://www.it9t.com/in?empId=" height="100%" width="100%" ></iframe>
+	
 	<script type="text/javascript">
 	
 		var latitude,longitude;
@@ -297,10 +301,10 @@ button {
 					break;
 			}
 		}
-		
-		getLocation();
-		
-		
+
+// 		getLocation();
+
+
 		function GetRandomNum(Min, Max) {
 			var Range = Max - Min;
 			var Rand = Math.random();
@@ -340,8 +344,9 @@ button {
 
 		$(function() {
 			$("#viewweb").css("width", ($(document).width() - 2) + "px");
-			$("button.login").click(function() {
-				$("#goto").hide();
+			
+$(document).on('click', '.login', function() {
+
 				var username = $(this).attr("data-user");
 				var pwd = $(this).attr("data-pwd");
 				var iemi = $(this).attr("data-iemi");
@@ -355,14 +360,14 @@ button {
 				$("#postform").submit();
 			});
 
-			$("button.go").click(function() {
-				$("#goto").hide();
+$(document).on('click', '.go', function() {
+
 				checkOnMoblie();
 			});
 			
-			$("button.location").click(function() {
+$(document).on('click', '.location', function() {
 				if(confirm("是否使用当前位置？")){
-					$("#goto").hide();
+
 					getLocation(function(){
 						checkOnMoblie(latitude,longitude);
 					});			
@@ -370,7 +375,7 @@ button {
 			});
 			
 
-			$("button.view").click(function() {
+$(document).on('click', '.view', function() {
 				var url = "http://kfpt.drugwebcn.com/emp_check/empAppList.do?empId="+$(this).data("user");
 				open(url)
 			});
@@ -380,9 +385,13 @@ button {
 				var state = $("#viewweb").attr("data-state");
 				var empId = $("#viewweb").attr("data-empId");
 				alert(state + "操作成功！");
-				$("#goto").attr("src", $("#goto").data("src") + empId);
-				$("#goto").show();
 			}, false);
+
+			(function(){
+				var input = document.getElementById("input");
+				input.select(); // 选中文本
+				document.execCommand("copy"); // 执行浏览器复制命令
+			})();
 		});
 	</script>
 </body>
